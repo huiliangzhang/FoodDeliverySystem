@@ -4,6 +4,7 @@ import com.study.fooddelivery.constants.Constants;
 import com.study.fooddelivery.entity.Billing;
 import com.study.fooddelivery.entity.Order;
 import com.study.fooddelivery.entity.OrderItem;
+import com.study.fooddelivery.service.KafkaService;
 import com.study.fooddelivery.service.OrderService;
 
 public class OrderServiceImpl implements OrderService {
@@ -35,6 +36,8 @@ public class OrderServiceImpl implements OrderService {
         billing.setBillingStatus(Constants.BillingStatus.INITIALIZED.getCode());
 
         //TODO: send order to kafka queue for notification to restaurant
+        KafkaService kafkaService = new KafkaServiceImpl();
+        kafkaService.produce(billing);
 
         //TODO: persist in DB
 
